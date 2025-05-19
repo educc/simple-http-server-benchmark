@@ -29,7 +29,7 @@ endpoints=(
 )
 
 # Write CSV header
-echo "Endpoint,Requests,OK%,AvgMs,QPS" > "$CSV_FILE"
+echo "Endpoint,Requests,Error Count,AvgMs,QPS" > "$CSV_FILE"
 
 for endpoint in "${endpoints[@]}"; do
   URL="${BASE_URL}${endpoint}"
@@ -40,13 +40,13 @@ for endpoint in "${endpoints[@]}"; do
   fortio load -json fortio_output.json -c 100 -t 2s -qps -1 "$URL" 
   
   # Parse metrics using jq
-  requests=$(jq '.Samples' fortio_output.json)
-  ok_percent=$(jq -r '(.RetCodes["200"] / .Samples * 100) | round' fortio_output.json)
-  avg_ms=$(jq -r '.DurationHistogram.Avg | round' fortio_output.json)
-  qps=$(jq -r '.actualQPS | round' fortio_output.json)
+  requests=$(jq '.DurationHistogram.Count' fortio_output.json)
+  error_count=$(jq  '.ErrorsDurationHistogram.Count' fortio_output.json)
+  avg_ms=$(jq '(.DurationHistogram.Avg * 1000) | round' fortio_output.json)
+  qps=$(jq -r '.ActualQPS | round' fortio_output.json)
   
   # Append to CSV
-  echo "$endpoint,$requests,$ok_percent%,$avg_ms,$qps" >> "$CSV_FILE"
+  echo "$endpoint,$requests,$error_count,$avg_ms,$qps" >> "$CSV_FILE"
   
   # Cleanup
 #   rm fortio_output.json

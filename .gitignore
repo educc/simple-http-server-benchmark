@@ -1,4 +1,4 @@
 data.db
 node_modules
-.csv
+*.csv
 fortio_output.json
