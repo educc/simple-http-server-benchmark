@@ -95,4 +95,4 @@ serve({
   },
 });
 
-console.log(`Server running at http://localhost:${PORT}/`);
+console.log(`[bun-raw] Server running at http://localhost:${PORT}/`);

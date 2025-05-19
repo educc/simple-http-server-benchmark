@@ -75,6 +75,6 @@ const PORT = process.env.PORT || 3000;
 (async () => {
   db = new DatabaseSync(DB_FILE);
   server.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}/`);
+    console.log(`[node-raw] Server running at http://localhost:${PORT}/`);
   });
 })();
