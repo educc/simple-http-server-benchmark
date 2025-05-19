@@ -6,9 +6,9 @@ It returns a JSON hello world
 - GET /html-template
 It renders a html using a template engine
 - GET /sqlite/random-5fields/:size
-It randomly returns a JSON list of objects with 5 fields each of them. The size determines how many items will be returned in the list. Those will be query from a sqlite database using primary key.
+It randomly returns a JSON list of objects with 5 fields each of them. The size determines how many items will be returned in the list. Those will be query from a sqlite database using primary key. It uses person5 table
 - GET /sqlite/random-30fields/:size
-The same as above but return 30 fields for each object.
+The same as above but return 30 fields for each object. It uses person30 table
 
 # Setup
 The following steps were used to determine the benchmark results:
