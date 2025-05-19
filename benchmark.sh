@@ -37,7 +37,7 @@ for endpoint in "${endpoints[@]}"; do
   echo "Testing: $URL"
   
   # Run fortio and save JSON output
-  fortio load -json fortio_output.json -c 100 -t 2s -qps -1 "$URL" 
+  fortio load -json fortio_output.json -c 100 -t 60s -qps -1 "$URL" 
   
   # Parse metrics using jq
   requests=$(jq '.DurationHistogram.Count' fortio_output.json)
