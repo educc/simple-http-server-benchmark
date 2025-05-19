@@ -1,0 +1,11 @@
+{
+  "name": "simple-http-server-benchmark",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@faker-js/faker": "^8.3.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
