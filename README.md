@@ -37,6 +37,10 @@ URLs used:
 - /sqlite/random-30fields/10
 5. Repeat step 3 for each implementation
 
+## Env var
+- PORT: to change the default port 3000
+- DB_FILE: to change the default database file "data.db"
+
 # Cloud server used
 Contabo VPS Server 
 - US East VPS 4 Cores
