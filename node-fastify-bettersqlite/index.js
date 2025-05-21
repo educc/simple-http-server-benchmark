@@ -1,4 +1,4 @@
-const fastify = require('fastify')({ logger: false });
+const fastify = require('fastify')({ logger: true });
 const path = require('path');
 const { Eta } = require('eta');
 const Database = require('better-sqlite3');
@@ -59,7 +59,7 @@ fastify.get('/sqlite/random-30fields/:size', async (request, reply) => {
 const start = async () => {
   try {
     db = new Database(DB_FILE);
-    await fastify.listen({ port: PORT });
+    await fastify.listen({ port: PORT, host: '0.0.0.0' });
     fastify.log.info(`[fastify-bettersqlite] Server listening on ${fastify.server.address().port}`);
   } catch (err) {
     fastify.log.error(err);

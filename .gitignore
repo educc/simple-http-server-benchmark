@@ -2,3 +2,4 @@ data.db
 node_modules
 *.csv
 fortio_output.json
+*.DS_Store
