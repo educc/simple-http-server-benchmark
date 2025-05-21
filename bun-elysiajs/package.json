@@ -1,0 +1,17 @@
+{
+  "name": "bun-elysiajs-app",
+  "version": "1.0.0",
+  "description": "ElysiaJS app with Bun and SQLite",
+  "type": "module",
+  "scripts": {
+    "start": "bun run index.ts",
+    "dev": "bun --watch run index.ts"
+  },
+  "dependencies": {
+    "elysia": "^1.0.0",
+    "eta": "^3.5.0"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  }
+}
