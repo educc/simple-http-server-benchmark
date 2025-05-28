@@ -12,7 +12,6 @@ RUN bun install --production
 # Copy application source and views
 COPY app.ts ./
 COPY views ./views
-COPY data.db ./
 
 # Expose port (default for Hono/Bun apps is 3000)
 EXPOSE 3000

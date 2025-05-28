@@ -13,7 +13,6 @@ RUN npm install --omit=dev
 # Copy application source code
 COPY server.js ./
 COPY views ./views
-COPY data.db ./
 
 # Expose the port (change if your app uses a different port)
 EXPOSE 3000
