@@ -1,0 +1,16 @@
+{
+  "name": "node-hono-bettersqlite",
+  "version": "1.0.0",
+  "description": "A Node.js app using Hono and better-sqlite3.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.3",
+    "better-sqlite3": "^11.10.0",
+    "eta": "^3.5.0",
+    "hono": "^4.7.10"
+  }
+}
