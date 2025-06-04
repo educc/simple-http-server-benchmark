@@ -86,28 +86,39 @@ private List<Map<String, Object>> getRandomRows(String table, int size) throws S
     Connection conn = getConnection();
     List<Map<String, Object>> result = new ArrayList<>(size);
     
-    // Fetch multiple rows in a single query using RANDOM() function in SQLite
-    String sql = "SELECT * FROM " + table + " ORDER BY RANDOM() LIMIT ?";
+    // Prepare the statement outside the loop to reuse it
+    String sql = "SELECT * FROM " + table + " WHERE id = ?";
     
     try (PreparedStatement ps = conn.prepareStatement(sql)) {
-        ps.setInt(1, size);
+        // Get metadata once outside the loop
+        int maxId = 100_000;
+        ResultSetMetaData metaData = null;
+        String[] columnNames = null;
         
-        try (ResultSet rs = ps.executeQuery()) {
-            ResultSetMetaData meta = rs.getMetaData();
-            int columnCount = meta.getColumnCount();
-            String[] columnNames = new String[columnCount];
+        for (int i = 0; i < size; i++) {
+            int id = (int) (Math.random() * maxId) + 1;
+            ps.setInt(1, id);
             
-            // Cache column names to avoid repeated calls to getColumnName
-            for (int i = 1; i <= columnCount; i++) {
-                columnNames[i-1] = meta.getColumnName(i);
-            }
-            
-            while (rs.next()) {
-                Map<String, Object> row = new LinkedHashMap<>(columnCount);
-                for (int i = 1; i <= columnCount; i++) {
-                    row.put(columnNames[i-1], rs.getObject(i));
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Initialize column names array on first result
+                    if (metaData == null) {
+                        metaData = rs.getMetaData();
+                        int columnCount = metaData.getColumnCount();
+                        columnNames = new String[columnCount];
+                        for (int j = 1; j <= columnCount; j++) {
+                            columnNames[j-1] = metaData.getColumnName(j);
+                        }
+                    }
+                    
+                    // Use the cached column names
+                    int columnCount = columnNames.length;
+                    Map<String, Object> row = new LinkedHashMap<>(columnCount);
+                    for (int j = 1; j <= columnCount; j++) {
+                        row.put(columnNames[j-1], rs.getObject(j));
+                    }
+                    result.add(row);
                 }
-                result.add(row);
             }
         }
     }
