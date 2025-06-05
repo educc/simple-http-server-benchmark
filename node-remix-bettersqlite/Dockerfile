@@ -49,8 +49,6 @@ RUN npm ci --only=production && npm cache clean --force
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/public ./public
 
-# Copy database file
-COPY data.db ./data.db
 
 # Copy the views directory for eta templates
 COPY app/views ./app/views
