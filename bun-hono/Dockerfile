@@ -10,7 +10,7 @@ COPY package.json bun.lock ./
 RUN bun install --production
 
 # Copy application source and views
-COPY app.ts ./
+COPY app.tsx ./
 COPY views ./views
 
 # Expose port (default for Hono/Bun apps is 3000)
