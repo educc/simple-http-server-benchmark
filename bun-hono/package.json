@@ -2,10 +2,10 @@
   "name": "bun-hono-app",
   "version": "1.0.0",
   "description": "A Bun + Hono + bun:sqlite example app",
-  "main": "app.ts",
+  "main": "app.tsx",
   "type": "module",
   "scripts": {
-    "start": "bun run app.ts"
+    "start": "bun run app.tsx"
   },
   "dependencies": {
     "hono": "latest",
