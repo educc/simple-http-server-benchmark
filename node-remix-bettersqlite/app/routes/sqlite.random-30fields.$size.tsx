@@ -1,4 +1,4 @@
-import { json, type LoaderFunctionArgs } from "@remix-run/node";
+import { type LoaderFunctionArgs } from "@remix-run/node";
 import { getDatabase, getRandomId, type Person30 } from "~/utils/db.server";
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -17,9 +17,9 @@ export async function loader({ params }: LoaderFunctionArgs) {
       }
     }
     
-    return json(rows);
+    return Response.json(rows);
   } catch (err) {
     console.log(err);
-    return json({ error: 'DB error' }, { status: 500 });
+    return Response.json({ error: 'DB error' }, { status: 500 });
   }
 }
