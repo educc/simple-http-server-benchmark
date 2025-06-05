@@ -1,10 +1,9 @@
-/** @jsx jsx */
 import { Hono } from 'hono';
 import { serve } from 'bun';
 import { Database } from 'bun:sqlite';
 import { Eta } from 'eta';
-import { jsx } from 'hono/jsx';
 import path from 'path';
+import type { FC } from 'hono/jsx'
 
 const DB_FILE = process.env.DB_FILE || 'data.db';
 const PORT = process.env.PORT || 3000;
@@ -12,6 +11,16 @@ const PORT = process.env.PORT || 3000;
 const db = new Database(DB_FILE);
 
 const eta = new Eta({ views: path.join(process.cwd(), 'views') });
+
+
+const Layout: FC = (props) => {
+  return (
+    <html>
+      <body>{props.children}</body>
+    </html>
+  )
+}
+
 
 function getRandomId() {
   return Math.floor(Math.random() * 100001) + 1;
@@ -53,22 +62,12 @@ app.get('/sqlite/random-30fields/:size', (c) => {
 });
 
 // JSX Component for rendering person data
-function PersonTable({ persons }: { persons: any[] }) {
+const PersonTable: FC<{ persons: unknown[] }> = (props: {
+  persons: unknown[]
+}) => {
+  const persons = props.persons || [];
   return (
-    <html>
-      <head>
-        <title>Person Data</title>
-        <style>
-          {`
-            body { font-family: Arial, sans-serif; margin: 20px; }
-            table { border-collapse: collapse; width: 100%; }
-            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-            th { background-color: #f2f2f2; }
-            tr:nth-child(even) { background-color: #f9f9f9; }
-          `}
-        </style>
-      </head>
-      <body>
+    <Layout>
         <h1>Person Data (30 Fields)</h1>
         <p>Found {persons.length} records</p>
         <table>
@@ -109,44 +108,43 @@ function PersonTable({ persons }: { persons: any[] }) {
           <tbody>
             {persons.map((person: any, index: number) => (
               <tr key={index}>
-                <td>{person.id}</td>
-                <td>{person.first_name}</td>
-                <td>{person.last_name}</td>
-                <td>{person.email}</td>
-                <td>{person.phone}</td>
-                <td>{person.date_of_birth}</td>
-                <td>{person.gender}</td>
-                <td>{person.address}</td>
-                <td>{person.city}</td>
-                <td>{person.state}</td>
-                <td>{person.zip_code}</td>
-                <td>{person.country}</td>
-                <td>{person.occupation}</td>
-                <td>{person.company}</td>
-                <td>{person.salary}</td>
-                <td>{person.education_level}</td>
-                <td>{person.marital_status}</td>
-                <td>{person.number_of_children}</td>
-                <td>{person.height_cm}</td>
-                <td>{person.weight_kg}</td>
-                <td>{person.blood_type}</td>
-                <td>{person.eye_color}</td>
-                <td>{person.hair_color}</td>
-                <td>{person.favorite_color}</td>
-                <td>{person.hobbies}</td>
-                <td>{person.languages}</td>
-                <td>{person.social_security_number}</td>
-                <td>{person.passport_number}</td>
-                <td>{person.driver_license}</td>
-                <td>{person.emergency_contact}</td>
+                <td>{person?.id || ''}</td>
+                <td>{person?.first_name || ''}</td>
+                <td>{person?.last_name || ''}</td>
+                <td>{person?.email || ''}</td>
+                <td>{person?.phone || ''}</td>
+                <td>{person?.date_of_birth || ''}</td>
+                <td>{person?.gender || ''}</td>
+                <td>{person?.address || ''}</td>
+                <td>{person?.city || ''}</td>
+                <td>{person?.state || ''}</td>
+                <td>{person?.zip_code || ''}</td>
+                <td>{person?.country || ''}</td>
+                <td>{person?.occupation || ''}</td>
+                <td>{person?.company || ''}</td>
+                <td>{person?.salary || ''}</td>
+                <td>{person?.education_level || ''}</td>
+                <td>{person?.marital_status || ''}</td>
+                <td>{person?.number_of_children || ''}</td>
+                <td>{person?.height_cm || ''}</td>
+                <td>{person?.weight_kg || ''}</td>
+                <td>{person?.blood_type || ''}</td>
+                <td>{person?.eye_color || ''}</td>
+                <td>{person?.hair_color || ''}</td>
+                <td>{person?.favorite_color || ''}</td>
+                <td>{person?.hobbies || ''}</td>
+                <td>{person?.languages || ''}</td>
+                <td>{person?.social_security_number || ''}</td>
+                <td>{person?.passport_number || ''}</td>
+                <td>{person?.driver_license || ''}</td>
+                <td>{person?.emergency_contact || ''}</td>
               </tr>
             ))}
           </tbody>
         </table>
-      </body>
-    </html>
+    </Layout>
   );
-}
+};
 
 app.get('/sqlite-jsx/random-30fields/:size', (c) => {
   const size = parseInt(c.req.param('size'), 10) || 1;

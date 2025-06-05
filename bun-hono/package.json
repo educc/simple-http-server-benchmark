@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "hono": "latest",
-    "eta": "latest"
+    "eta": "latest",
+    "react": "latest"
   },
   "devDependencies": {},
   "engines": {
