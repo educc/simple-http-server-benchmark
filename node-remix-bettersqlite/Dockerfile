@@ -36,10 +36,6 @@ RUN apk add --no-cache \
     curl \
     dumb-init
 
-# Create a non-root user for security
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S remix -u 1001 -G nodejs
-
 # Set the working directory
 WORKDIR /app
 
@@ -54,16 +50,10 @@ COPY --from=builder /app/build ./build
 COPY --from=builder /app/public ./public
 
 # Copy database file
-#COPY data.db ./data.db
+COPY data.db ./data.db
 
 # Copy the views directory for eta templates
 COPY app/views ./app/views
-
-# Change ownership of the app directory to the remix user
-RUN chown -R remix:nodejs /app
-
-# Switch to non-root user
-USER remix
 
 # Expose the port the app runs on
 EXPOSE 3000
